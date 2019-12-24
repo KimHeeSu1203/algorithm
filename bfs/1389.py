@@ -31,29 +31,23 @@ for i in range(m):
 sum = [[0 for col in range(n)] for row in range(n)]
 sum_sum = [0 for col in range(n)]
 all_friends = [i for i in range(n)]
-print(sum)
-print(all_friends)
+
 for i in range(n):
     flag1 = len(queue[i])
     queue[i].append(i)
     flag2 = len(queue[i])
     tmp_sum = 0
     while sorted(queue[i]) != all_friends:
-        print("all_friends",all_friends)
-        print("queue[i]",sorted(queue[i]))
+
         tmp_sum +=1
         for j in range(flag1,flag2):
             #queue에 각자의 친구를 더하는 것
             friend = queue[i][j]
             #friend_friend = list()
             for p in range(n):
-                print("111111111")
                 if (relationship_matrix[friend][p] == 1) & (p not in queue[i]): #이 사람의 친구 정보를 담는데 나한테 아직 없으면
-                    print("2222222")
                     queue[i].append(p)
                     sum[i][p] = tmp_sum
-            print(queue[i])
-            print("!!!!")
         flag1 = flag2
         flag2 = len(queue[i])
 
