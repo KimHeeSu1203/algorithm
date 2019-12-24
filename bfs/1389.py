@@ -10,19 +10,17 @@ A와 B가 친구이면, B와 A도 친구이며, A와 B가 같은 경우는 없�
 4 3
 3 2
 """
+import queue
+import operator
 
 n,m = map(int,input().split())
 relationship=list()
+queue = [[] for i  in range(n)]
 relationship_matrix = [[0 for col in range(n)] for row in range(n)]
-visit_matrix = [[0 for col in range(n)] for row in range(n)]
 
-for i in range(m):
+for i in range(m): # 관계 정보 받아온
     k = input().split()
     relationship.append(k)
-
-#print(relationship)
-for i in range(n):
-    visit_matrix[i][i] = 1
 
 for i in range(m):
     ab = int(relationship[i][0])-1
@@ -30,16 +28,45 @@ for i in range(m):
     relationship_matrix[ab][ba] = 1
     relationship_matrix[ba][ab] = 1
 
-sum = 0
-queue = list()
-for i in range(n): #1번째 사람부터 해
-    for j in range(n): # 첫번째 사람 순서대
-        while visit_matrix[i] != [1,1,1,1,1]: #전부 다 방문할 때까
-            if i!=j & relationship_matrix[i][j] == 1: #친구인 사이이면
-                visit_matrix[i][j] = 1
-                queue.append(j)
-                sum +=1
+sum = [[0 for col in range(n)] for row in range(n)]
+sum_sum = [0 for col in range(n)]
+all_friends = [i for i in range(n)]
+print(sum)
+print(all_friends)
+for i in range(n):
+    flag1 = len(queue[i])
+    queue[i].append(i)
+    flag2 = len(queue[i])
+    tmp_sum = 0
+    while sorted(queue[i]) != all_friends:
+        print("all_friends",all_friends)
+        print("queue[i]",sorted(queue[i]))
+        tmp_sum +=1
+        for j in range(flag1,flag2):
+            #queue에 각자의 친구를 더하는 것
+            friend = queue[i][j]
+            #friend_friend = list()
+            for p in range(n):
+                print("111111111")
+                if (relationship_matrix[friend][p] == 1) & (p not in queue[i]): #이 사람의 친구 정보를 담는데 나한테 아직 없으면
+                    print("2222222")
+                    queue[i].append(p)
+                    sum[i][p] = tmp_sum
+            print(queue[i])
+            print("!!!!")
+        flag1 = flag2
+        flag2 = len(queue[i])
 
-                for k in
+
+for i in range(n):
+    for j in range(n):
+        sum_sum[i] += sum[i][j]
+
+index = sum_sum.index(min(sum_sum))
+index +=1
+
+print(index)
+
+
 
 
