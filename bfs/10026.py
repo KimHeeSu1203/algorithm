@@ -8,7 +8,56 @@
 
 그림이 입력으로 주어졌을 때, 적록색약인 사람이 봤을 때와 아닌 사람이 봤을 때 구역의 수를 구하는 프로그램을 작성하시오.
 
+RRRBB
+GGBBB
+BBBRR
+BBRRR
+RRRRR
+
 """
+
+def bfs(size,box):
+    count = 0
+    box_visit = [[0 for col in range(size)] for row in range(size)]
+    for i in range(size):
+        for j in range(size):
+            if box_visit[i][j] == 0: # 이미 들린 경우 배제
+                q_x = []
+                q_y = []
+                q_x.append(i)
+                q_y.append(j)
+                count += 1
+                while (len(q_x) > 0) & (len(q_y) > 0): #q가 있을 떄
+                    node_x = int(q_x.pop(0))
+                    node_y = int(q_y.pop(0))
+                    if (node_x != 0):
+                        if (box[node_x][node_y] == box[node_x-1][node_y]) & (box_visit[node_x-1][node_y]==0):
+                            q_x.append(node_x-1)
+                            q_y.append(node_y)
+                            box_visit[node_x - 1][node_y] =1
+
+                    if (node_x != size-1):
+                        if (box[node_x][node_y] == box[node_x+1][node_y]) & (box_visit[node_x+1][node_y]==0):
+                            q_x.append(node_x +1)
+                            q_y.append(node_y)
+                            box_visit[node_x+1][node_y]=1
+
+                    if (node_y != 0):
+                        if(box[node_x][node_y] == box[node_x][node_y-1]) & (box_visit[node_x][node_y-1]==0):
+                            q_x.append(node_x)
+                            q_y.append(node_y-1)
+                            box_visit[node_x][node_y-1]=1
+
+                    if (node_y != size-1):
+                        if(box[node_x][node_y] == box[node_x][node_y+1]) & (box_visit[node_x][node_y+1]==0):
+                            q_x.append(node_x)
+                            q_y.append(node_y+1)
+                            box_visit[node_x][node_y + 1]=1
+
+
+    return count
+
+
 
 size = int(input())
 box_origin = []
@@ -16,25 +65,18 @@ for i in range(size):
     tmp_box = input()
     box_origin.append(tmp_box)
 
-box_jeok = box_origin
+box_jeok = []
 
 for i in range(size):
+    temp_jeok = []
     for j in range(size):
-        if(box_origin[i][j]=='G'):
-            box_jeok[i][j]='R'
+        if box_origin[i][j] == 'G':
+            temp_jeok.append('R')
+        else:
+            temp_jeok.append(box_origin[i][j])
+    box_jeok.append(temp_jeok)
 
+a = bfs(size,box_origin)
+b = bfs(size,box_jeok)
 
-def bfs(box):
-    q = []
-    box_visit = [[0 for col in range(size)] for row in range(size)]
-
-    q.append(box[0][0])
-    box_visit[0][0]=1
-
-    for i in range(size):
-        for j in range(size):
-            if [i,j] in visit:
-                continue
-
-            try:
-                q.append(box[i-1][0])
+print(a,b)
