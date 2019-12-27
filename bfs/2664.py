@@ -7,6 +7,11 @@
 입력에서 요구한 두 사람의 촌수를 나타내는 정수를 출력한다. 어떤 경우에는 두 사람의 친척 관계가 전혀 없어 촌수를 계산할 수 없을 때가 있다. 이때에는 -1을 출력해야 한다.
 """
 
+
+"""
+양방향성을 고려하지 않아서인가 잘못풀었음 
+"""
+
 class Node():
     def __init__(self, data):
         self.data = data
@@ -30,46 +35,51 @@ for i in range(getChon):
     mom, child = map(int,input().split())
     all[mom].childAppend(child)
 
-visit = []
-family_size = []
+
+visit_person=[]
+visit_chon = [0 for i in range(personNum+1)]
+family_size = [0]
+
+k = 1
 for i in range (1,personNum+1):
-    if (i in visit)  : # 이미 들렸던지 자식이 없는 노드면 안보고 넘어간다
-        continue
-    elif (len(all[i].childs)==0):
+    if (i in visit_person) | (len(all[i].childs)==0): # 이미 들렸던지 자식이 없는 노드면 안보고 넘어간다
+        k+=1
         continue
 
     q = [] # 노드를 의미
     q.append(all[i])
-    visit.append(i)
-
-    k = 0
+    visit_person.append(i)
+    temp_chon=0
     while q:
+        temp_chon += 1
         node = q.pop(0)
+        k += len(node.childs)
         for j in range(len(node.childs)):
             q.append(all[node.childs[j]])
-            k+=1
-        visit.extend(node.childs)
-
+            visit_chon[node.childs[j]]=temp_chon
+        visit_person.extend(node.childs)
     family_size.append(k)
 
+
+
+
 #다른 집안 가족일 경우 -1
-    ##
-if visit.index(getPerson1) > visit.index(getPerson2) : # person1이 어른일 경우
-    print("")
-print("visit")
-print(visit)
-print("family")
-print(family_size)
 
-"""
-q = []
-visited = set()
-while q :
-    node = q.pop(0) # 탐색 할 애 뺸다
-    if node in visited:
-        continue
-    q.extend(node.childs)
+for i in range(len(family_size)-1):
+    group = visit_person[family_size[i]:family_size[i+1]]
+    if (getPerson1 in group) & (getPerson2 in group):
+        if visit_person.index(getPerson1) < visit_person.index(getPerson2): # person1이 어른일 경우
+            chon = visit_chon[getPerson2]+visit_chon[getPerson1]
+            print(chon)
 
-"""
+        elif visit_person.index(getPerson1) > visit_person.index(getPerson2):
+            chon = visit_chon[getPerson1]>visit_chon[getPerson2]
+            print(chon)
+        break
+
+    else:
+        print("-1")
+        break
+
 
 
