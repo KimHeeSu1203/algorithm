@@ -1,11 +1,6 @@
 """
-첫째 줄에 회의의 수 N(1 ≤ N ≤ 100,000)이 주어진다. 둘째 줄부터 N+1 줄까지 각 회의의 정보가 주어지는데 이것은 공백을 사이에 두고 회의의 시작시간과 끝나는 시간이 주어진다.
-시작 시간과 끝나는 시간은 231-1보다 작거나 같은 자연수 또는 0이다.
+틀린 이유, 소팅 시에 x[1], x[0]순으로 소팅이 두번 되었어야 했는데, 소팅을 한번만 해놨기 때문에 답이 잘 안나왔음
 """
-
-def sortrule_selection(item):
-    return item[1]
-
 N = int(input())
 all=[]
 
@@ -16,11 +11,9 @@ for _ in range(N):
 batch=[]
 batch.append([0,0])
 
-all.sort(key=sortrule_selection)
-
+all.sort(key=lambda x : [x[1], x[0]])
 for i in range(len(all)):
-    if all[i][0] < batch[-1][1]:
-        continue
-    batch.append(all[i])
+    if all[i][0] >= batch[-1][1]:
+        batch.append(all[i])
 
 print(len(batch)-1)
