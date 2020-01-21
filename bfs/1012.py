@@ -17,76 +17,40 @@
 """
 
 
-def bfs(M,N,ground,visit):
-    count = 0
-    q = []
-    for i in range(N):#8
-        for j in range(M): #10
-            if (ground[i][j] == 1) & (visit[i][j]==0):
-                q.append([i,j])
-                while q:
-                    [a,b] = q.pop(0)
-                    visit[b][a]=1
-
-                        next_XY = XY(next_X, next_Y)
-                        if (next_X < 0 | next_X > len(ground)-1| next_Y < 0 | next_Y > len(ground[0])-1 | visit[next_X][next_Y]== 1):
-                            print("next_X",next_X)
-                            print("next_Y",next_Y)
-                            continue
-                        q.append(next_XY)
-                count += 1
-    print("count")
-    print(count)
-
-
-caseNum = int(input())
-
-for i in range(caseNum):
-
+test_time = int(input())
+for _ in range(test_time):
     M,N,K = map(int,input().split())
     ground = [[0 for _ in range(M)] for _ in range(N)]
-    visit = [[0 for _ in range(M)] for _ in range(N)]
+    visited = [[0 for _ in range(M)] for _ in range(N)]
 
-    for j in range(K):
-        x, y = map(int,input().split())
-        ground[y][x] = 1
+    for numK in range(K):
+        j,i = map(int,input().split())
+        ground[i][j] = 1
+    queue = []
+    section = 0
+    for i in range(N):
+        for j in range(M):
+            if(ground[i][j] == 1 and visited[i][j] == 0):
+                section += 1
+                queue.append([i,j])
+                visited[i][j] = 1
 
-    bfs(M,N,ground,visit)
-    """
-    size_x, size_y, K = map(int,input().split()) #가로, 세
-    ground=[[0 for col in range(size_x)] for row in range(size_y)] # ground 만들고
-    print("ground")
-    print(ground)
-    visit = [[0 for col in range(size_x)] for row in range(size_y)]
-    for j in range(K):
-        x,y = map(int,input().split())
-        ground[y][x]=1
-    bfs(ground,visit)
-
-"""
-
-
-
-"""
-2
-10 8 17
-0 0
-1 0
-1 1
-4 2
-4 3
-4 5
-2 4
-3 4
-7 4
-8 4
-9 4
-7 5
-8 5
-9 5
-7 6
-8 6
-9 6
-10 10 1
-5 5
-"""
+            while queue:
+                [a,b] = queue.pop(0)
+                if(a>0):
+                    if(ground[a-1][b] == 1 and visited[a-1][b] == 0):
+                        queue.append([a-1, b])
+                        visited[a-1][b] = 1
+                if(a<N-1):
+                    if(ground[a+1][b] == 1 and visited[a+1][b] == 0):
+                        queue.append([a+1, b])
+                        visited[a+1][b] = 1
+                if(b>0):
+                    if(ground[a][b-1] == 1 and visited[a][b-1] == 0):
+                        queue.append([a, b-1])
+                        visited[a][b-1] = 1
+                if(b<M-1):
+                    if (ground[a][b+1] == 1 and visited[a][b+1] == 0):
+                        queue.append([a, b+1])
+                        visited[a][b+1] = 1
+    print(section)
