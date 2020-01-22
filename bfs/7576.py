@@ -1,61 +1,40 @@
-def BFS(N,M,box):
-    time = 0
+from collections import deque
 
-    queue = []
-    visit = [[0 for _ in range(N)] for _ in range(M)]
-    print(visit)
+def bfs(M, N, box):
+    dx=[0,0,1,-1]
+    dy=[-1,1,0,0]
 
-    for i in range(M):
-        for j in range(N):
-            if box[i][j] == '1' and visit[i][j] == 0:
-                queue.append([i, j])
-                visit[i][j] = 1
+    days = -1
 
-            while queue:
-                time += 1
-                tmp = []
-                [a,b] = queue.pop(0)
+    while ripe: #익은 애들
+        days +=1
+        for _ in range(len(ripe)):
+            x,y = ripe.popleft()
 
-                if a > 0 :
-                    if visit[a-1][b] == 0 and box[a - 1][b] == '0':
-                        box[a - 1][b] = '1'
-                        queue.append([a - 1, b])
-                if b > 0 :
-                    if visit[a][b-1] == 0 and box[a][b - 1] == '0':
-                        box[a][b - 1] = '1'
-                        queue.append([a, b - 1])
-                if a < M - 1 :
-                    if visit[a+1][b] == 0 and box[a + 1][b] == '0':
-                        box[a + 1][b] = '1'
-                        queue.append([a + 1, b])
-                if b < N - 1 :
-                    if visit[a][b+1] == 0 and box[a][b + 1] == '0':
-                        box[a][b + 1] = '1'
-                        queue.append([a, b + 1])
+            for i in range(4):
+                nx = x + dx[i]
+                ny = y + dy[i]
 
-                #if tmp:
-                #    print(tmp)
-                #    time += 1
-                #queue.extend(tmp)
+                if (0<= nx <N) and (0<= ny <M) and (box[nx][ny]==0):
+                    box[nx][ny] = 1
+                    ripe.append([nx,ny])
 
-                for i in range(M):
-                    print(box[i])
-                print()
-    print("time:", time)
-    return box
+    for b in box:
+        if 0 in b:
+            return -1
+    return days
 
 
-
-N,M = map(int,input().split())
-
+M,N =map(int,input().split())
 box = []
-result = []
-for i in range(M):
-    one_line = input().split()
-    box.append(one_line)
+ripe = deque()
 
-result = BFS(N,M,box)
+for i in range(N):
+    row = list(map(int, input().split()))
+    for j in range(M):
+        if row[j]==1:
+            ripe.append([i,j])
+    box.append(row)
 
-for i in range(M):
-    if '0' in result[i]:
-        print("-1")
+result = bfs(M,N,box)
+print(result)
