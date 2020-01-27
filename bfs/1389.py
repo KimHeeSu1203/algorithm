@@ -15,7 +15,7 @@ import operator
 
 n,m = map(int,input().split())
 relationship=list()
-queue = [[] for i  in range(n)]
+queue = [[] for i in range(n)]
 relationship_matrix = [[0 for col in range(n)] for row in range(n)]
 
 for i in range(m): # 관계 정보 받아온

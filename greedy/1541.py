@@ -65,8 +65,6 @@ print(join_All.
 """
 """
 n = [sum(int(x) for x in y.split('+')) for y in input().split('-')]
-print(n)
-print(sum)
 print(n[0] - sum(n[1:]))
 
 """
