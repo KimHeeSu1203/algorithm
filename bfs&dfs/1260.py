@@ -4,61 +4,50 @@
 어떤 두 정점 사이에 여러 개의 간선이 있을 수 있다. 입력으로 주어지는 간선은 양방향이다.
 """
 from collections import defaultdict
-from collections import deque
+def dfs(d,V):
 
-def dfs(d,d_visit,V):
-    for i in range(1,N+1):
-        d_visit[i] = 0
-    stack = [V]
-    temp_stack = [V]
-    d_visit[V] = 1
+    stack = list()
+    d_visit = list()
+
+    stack.append(V)
 
     while stack:
         cur = stack.pop()
-        connect = sorted(list(d[cur]))
-        for i in connect:
-            if(d_visit[i] == 0):
-                stack.append(i)
-                temp_stack.append(i)
-                d_visit[i] = 1
+        if cur not in d_visit:
+            d_visit.append(cur)
+            connect = sorted(list(d[cur]))
+            connect.reverse()
+            stack.extend(connect)
 
-    print(temp_stack)
+    print(" ".join(map(str, d_visit)))
 
 
-def bfs(d,d_visit, V):
-    for i in range(1,N+1):
-        d_visit[i] = 0
 
-    queue = deque()
-    temp_queue = []
+def bfs(d,V):
 
-    queue.append(V)
-    temp_queue.append(V)
+    queue = [V]
 
-    d_visit[V] = 1
+    d_visit = list()
+    d_visit.append(V)
 
     while queue:
-        cur = queue.popleft()
+        cur = queue.pop(0)
         connect = sorted(list(d[cur]))
         for i in connect:
-            if (d_visit[i] == 0):
+            if i not in d_visit:
                 queue.append(i)
-                temp_queue.append(i)
-                d_visit[i] = 1
+                d_visit.append(i)
 
-    print(temp_queue)
-
-
-
+    print(" ".join(map(str, d_visit)))
 
 N, M, V = map(int, input().split()) # V는 시작
 d = defaultdict(set)
-d_visit = defaultdict(set)
+
 for _ in range(M):
     a,b = map(int,input().split())
     d[a].add(b)
     d[b].add(a)
 
-dfs(d,d_visit,V)
-bfs(d,d_visit,V)
+dfs(d,V)
+bfs(d,V)
 
