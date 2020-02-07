@@ -1,36 +1,24 @@
 from collections import defaultdict
+import sys
 
 def find(n, d):
-    for i in range(n):
-        for j in range(i+1, n):
-            if len(d[i]) >= len(d[j]):
-                width = len(d[j])
-                if (d[j] == d[i][0:width]):
-                    return -1
-                    break
+    for i in range(n-1):
+        width = len(d[i])
+        if (d[i] in d[i+1][0:width]):
+            return "NO"
+            break
+    return "YES"
 
-            elif len(d[i]) < len(d[j]):
-                width = len(d[i])
-                if (d[i] == d[j][0:width]):
-                    return -1
-                    break
-
-    return 0
-
-t = int(input())
+t = int(sys.stdin.readline())
 for _ in range(t):
-    n = int(input())
-    d = defaultdict(str)
+    n = int(sys.stdin.readline())
+    d = []
     for i in range(n):
-        d[i] = input()
+        d.extend(sys.stdin.readline().split())
+    d.sort()
+    #d.sort(key = lambda x : (len(x),x))
+    print(find(n,d))
 
-    result = find(n,d)
-
-    if(result == 0):
-        print("YES")
-
-    else:
-        print("NO")
 
 
 
