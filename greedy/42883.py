@@ -2,24 +2,21 @@ def solution(number, k):
     answer = ''
     number = list(str(number))
     stack = []
-    stack.append(number[0])
-    m = 0
-    for i in range(1,len(number)):
+    ans_len = len(number)-k
+    for i in range(ans_len):
         stack.append(number[i])
-        size = len(stack)-1
-        print("m1",m)
-        print("stack", stack)
-        if(stack[size-1]<stack[size-2]) & (m!=k):
-            stack.pop(size-1)
-            print(stack)
-            m += 1
-            print("m2", m)
-
-    answer = "".join(stack)[:-k]
+    print(stack)
+    for i in range(ans_len,len(number)):
+        if(number[i]>=min(stack)):
+            stack.pop(stack.index(min(stack)))
+            stack.append(number[i])
+            print("stack : ", stack)
+    answer = "".join(stack)
     return answer
 
-number = int(input())
-k = int(input())
+number = 4177252841
+k = 4
 print(solution(number,k))
 
 
+## 이건 앞에부터 빼는게 안되니까 이렇게 풀면 안된다. 
