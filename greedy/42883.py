@@ -1,22 +1,21 @@
+#참조 : https://blog.naver.com/ujafratte111/221762699717
+
 def solution(number, k):
-    answer = ''
-    number = list(str(number))
-    stack = []
-    ans_len = len(number)-k
-    for i in range(ans_len):
-        stack.append(number[i])
-    print(stack)
-    for i in range(ans_len,len(number)):
-        if(number[i]>=min(stack)):
-            stack.pop(stack.index(min(stack)))
-            stack.append(number[i])
-            print("stack : ", stack)
+    stack = [number[0]]
+
+    for num in number[1:]:
+        while len(stack) > 0 and stack[-1] < num and k>0:
+            k -=1
+            stack.pop()
+        stack.append(num)
+
+    if k!= 0:
+        stack = stack[:-k]
+
+
     answer = "".join(stack)
     return answer
 
-number = 4177252841
+number = "4177252841"
 k = 4
 print(solution(number,k))
-
-
-## 이건 앞에부터 빼는게 안되니까 이렇게 풀면 안된다. 
