@@ -1,16 +1,11 @@
 def solution(numbers):
     answer = ''
-    num_Array = []
-    for i in range(len(numbers)):
-        num = i, str(numbers[i])[0]
-        num_Array.append(num)
-        num_Array.sort(key=lambda x:(x[1],x[0]),reverse=True)
-
-    print(num_Array)
-    for i in range(len(num_Array)):
-        x = num_Array[i][0]
-        answer += str(numbers[x])
-    return answer
+    numbers = list(map(str,numbers))
+    answer = "".join(sorted(numbers,key=lambda x:(x[0],x[1%len(x)],x[2%len(x)],x[3%len(x)]),reverse=True))
+    if int(answer) != 0:
+        return answer
+    else:
+        return "0"
 
 
 numbers = [3, 30, 34, 5, 9]
