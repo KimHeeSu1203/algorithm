@@ -16,6 +16,7 @@ for _ in range(t):
     for i in range(n):
         d.extend(sys.stdin.readline().split())
     d.sort()
+    print("d",d)
     #d.sort(key = lambda x : (len(x),x))
     print(find(n,d))
 

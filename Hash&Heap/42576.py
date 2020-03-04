@@ -1,11 +1,9 @@
+import collections
+
 def solution(participant, completion):
 
-    for i in completion:
-        participant.remove(i)
-
-    print(participant)
-    answer = ''.join(participant)
-    return answer
+    answer = collections.Counter(participant) - collections.Counter(completion)
+    return list(answer.keys())[0]
 
 participant = ["leo", "kiki", "eden"]
 completion = ["eden", "kiki"]
