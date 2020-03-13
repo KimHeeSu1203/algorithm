@@ -1,3 +1,4 @@
+# 프로그래머스42584
 def solution(prices):
     answer = []
     for i in range(len(prices)):
