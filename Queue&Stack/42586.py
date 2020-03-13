@@ -1,3 +1,4 @@
+# 프로그래머스42586
 def solution(progresses, speeds):
     answer = []
 
