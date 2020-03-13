@@ -1,3 +1,5 @@
+# 프로그래머스42587
+
 def solution(priorities, location):
     answer_list = []
     num_priorities = []
