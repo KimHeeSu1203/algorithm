@@ -10,7 +10,6 @@ def solution(numbers, target):
             answer += 1
     return answer
 
-
 numbers = [1, 1, 1, 1, 1]
 target = 3
 print(solution(numbers,target))
