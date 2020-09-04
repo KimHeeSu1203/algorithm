@@ -8,7 +8,10 @@ def solution(N, stages):
             tmp_answer[i] = tmp_answer[i] + 1
 
     for i in range(N):
-        answer[i] = (tmp_answer[i]-tmp_answer[i+1]) / tmp_answer[i]
+        if tmp_answer[i] == 0:
+            answer[i] = 0
+        else:
+            answer[i] = (tmp_answer[i]-tmp_answer[i+1]) / tmp_answer[i]
 
     answer = [i[0]+1 for i in sorted(enumerate(answer), key=lambda x: [-x[1],x[0]])]
     return answer
