@@ -1,5 +1,22 @@
-## combination 말고 다른 방법 
+## combination 말고 다른 방법
 
+def solution(d,budget):
+    max = 0
+    d.sort()
+    for i in range(len(d)):
+        if (sum(d[:i+1])) <= budget:
+            max = max + 1
+        else:
+            break
+    return max
+
+d = [1,3,2,5,4]
+budget = 9
+print(solution(d,budget))
+
+
+
+""""
 from itertools import combinations
 
 def solution(d, budget):
@@ -18,8 +35,4 @@ def solution(d, budget):
                 budget_count = i
 
     return budget_count
-
-
-d = [1,3,2,5,4]
-budget = 9
-solution(d,budget)
+"""
